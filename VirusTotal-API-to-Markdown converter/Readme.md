@@ -2,7 +2,8 @@
 
 This is an API introductory mini-project.
 The converter receives a hash representation of a file (MD5/SHA-1/SHA-256), then uses VirusTotal's API platform 
-which analyses the file using more than 50 online antivirus scan engines,
+which analyses the file using more than 50 online antivirus scan engines. 
+(https://www.virustotal.com/gui/home/upload)
 The converter then collects all relevant data and neatly organizes it into a Markdown text table like so:
 
 ### File Information
