@@ -152,31 +152,5 @@ def createMarkdown(dict_value, header_map) -> list:
 
 
 if __name__ == "__main__":
-    hashToMarkdown("84c82835a5d21bbcf75a61706d8ab549")
+    hashToMarkdown("84c82835a5d21bbcf75a61706d8ab549")  # Example Hash
 
-"""
-Web Scraping:
-1. we need to send a request to the server in order to get the data
-2. we do this with the request.get command
-3. the headers - why we need them and what they are? 
-    3.1. headers are used to differentiate the headings and sub-headings of a page from the rest of the content
-    3.2. IN THIS ASSIGNMENT - I use the "Accept" header and "x-apikey" as needed.
-        3.2.1. the "ACCEPT" header - this is used to infrom the server by the client which content type is
-               understandable by the client. 
-    3.3. headers are sent using a dictionary format with the get function
-"""
-"""
-understanding the JSON file
-1. resembles a python dictionary. i.e. "data:" is the key and the value is an array of objects
-   each object hold a key to a string value or another array of objects.
-2. in order to work with the data - load into a Python file.
-   it is easily done with the - "json.loads(string)" where the string hold the entire json file output
-3. the output of the conversion is a messy python dictionary. the conversions happens with json.decoder that
-   states which JSON object is translated into which Python object (i.e. JSON - array -> Pytohn - list)
-
-"""
-"""
-JSON to Markdown:
-1. python data to DataFrame:
-   1.1. what is a DataFrame? a DataFrame is 
-"""
