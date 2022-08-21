@@ -5,6 +5,7 @@ Nesting Tic-Tac-Toe is a self invented variation of the original game (made up t
 In this variation, in addition to choosing to best game tile, each player (or comp) needs to choose a tile label size, spanning from 1 (smallest) to 5 (largest),
 each size can only be picked once and a player can STOMP tiles with smaller tiles for its opponnet.
 for example:
+
 ![image](https://user-images.githubusercontent.com/63443963/185794985-e3e67050-a948-4125-bf37-bc66395691f4.png)
 
 ### GUI:
@@ -19,5 +20,6 @@ The game is made up of 2 possible heuristics to choose from:
 ### WILL BE ADDED:
 1. sounds and message boxes to make clear when a the computer stomps you (its very fast).
 2. a splash screen.
+3. stats for number of wins for each player along with fun statistics.
 
 
