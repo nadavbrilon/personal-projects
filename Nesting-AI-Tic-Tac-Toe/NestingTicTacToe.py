@@ -50,7 +50,10 @@ class App(tk.Tk):
         "button info - holds information (player,..........."
 
         # Game Labels
-        self.winner_label = tk.Label(self, text=self.curr_player + "  Wins!", borderwidth=3, bg="white", anchor=tk.CENTER,
+        winner = "AI"
+        if self.curr_player == self.human:
+            winner = "Human"
+        self.winner_label = tk.Label(self, text=str(winner) + "  Wins!", borderwidth=3, bg="white", anchor=tk.CENTER,
                                      font=WINNER_TIE_LABEL)
         self.tie_label = tk.Label(self, text="Game Tie", borderwidth=3, bg="white", anchor=tk.CENTER,
                                   font=WINNER_TIE_LABEL)
@@ -216,11 +219,15 @@ class App(tk.Tk):
         return False
 
     def checkWinner(self,row ,column):
+        "checkWinner - checks the game state for a winner in all options, prints labels according to the state"
         checks = [self.checkVertical(column), self.checkHorizontal(row), self.checkMainDiagonal(row, column),
                   self.checkSecondDiagonal(row, column)]
         for check in checks:
             if check == True:
-                self.winner_label = tk.Label(self, text=self.curr_player + "  Wins!", borderwidth=3, bg="white",
+                winner = "AI"
+                if self.curr_player == self.human:
+                    winner = "Human"
+                self.winner_label = tk.Label(self, text=str(winner) + "  Wins!", borderwidth=3, bg="white",
                                              anchor=tk.CENTER, font=WINNER_TIE_LABEL)
                 self.winner_label.grid(row=0, column=0, columnspan=2)
                 for row in range(3):
@@ -243,7 +250,7 @@ class App(tk.Tk):
         return 0    # no winner
 
     def nextTurn(self, row, column, size, current_player):
-        "nextTurn - ...................................................."
+        "nextTurn - function updates the game state according to the given info, checks win option and changes player"
         if self.curr_player == self.ai:
             # put move on the board
             self.updateGameBoard(self.curr_player, row, column, size)
@@ -359,6 +366,7 @@ class AI():
         self.eval = 0    # evaluation for a specific game board
         self.depth = depth
         self.level = LEVEL
+        self.best_move = ()
 
         if self.human == self.ai:
             self.human = 'x'
@@ -389,9 +397,9 @@ class AI():
             cond = all(board[row][col] != 0 for col in range(3))
             if cond and (board[row][0][1] == board[row][1][1] == board[row][2][1]):
                 if board[row][0][1] == self.ai:
-                    self.eval = 1
-                else:
                     self.eval = -1
+                else:
+                    self.eval = 1
                 return self.eval
 
         # vertical win
@@ -443,8 +451,8 @@ class AI():
                 eval = self.minimax(temp_board, depth - 1, ai_used_sizes, temp_human_used_sizes, False)[0]
                 max_eval = max(max_eval, eval)
                 if eval == max_eval:
-                    best_move = (child[0], child[1], child[2])
-            return max_eval, best_move
+                    self.best_move = (child[0], child[1], child[2])
+            return max_eval, self.best_move
 
         else:                         # computer
             min_eval = float("inf")
@@ -458,8 +466,8 @@ class AI():
                 eval = self.minimax(temp_board, depth -1,temp_ai_used_sizes, human_used_sizes, True)[0]
                 min_eval = min(min_eval, eval)
                 if eval == min_eval:
-                    best_move = (child[0], child[1], child[2])
-            return min_eval, best_move
+                    self.best_move = (child[0], child[1], child[2])
+            return min_eval, self.best_move
 
 
     def heuristic(self):
@@ -473,9 +481,8 @@ class AI():
 
         elif self.level == 2:
             # minimax heuristic
-            eval, best_move_t = self.minimax(self.board, self.depth,self.ai_used_sizes, self.human_used_sizes, False)
-            return best_move_t
-
+            eval, self.best_move = self.minimax(self.board, self.depth,self.ai_used_sizes, self.human_used_sizes, False)
+            return self.best_move
 
 
 if __name__=="__main__":
