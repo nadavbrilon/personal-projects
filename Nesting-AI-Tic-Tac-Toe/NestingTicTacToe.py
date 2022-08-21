@@ -21,6 +21,7 @@ class App(tk.Tk):
         self.container = tk.Frame(self)
         self.title("Nesting Tic-Tac-Toe")
         # Game mechanics
+        self.depth = 1
         self.players = ['x', 'o']
         self.human = random.choice(self.players)        # assign x/o randomly
         if self.human == 'x':
@@ -100,13 +101,16 @@ class App(tk.Tk):
 
         # case - first player is AI
         if self.curr_player == self.ai:
-            self.ai_move = AI(self.curr_player, self.button_info, self.used_sizes_ai, 0, LEVEL).heuristic()[1]
-            print(str(self.ai_move))
+            self.ai_move = AI(self.curr_player, self.button_info, self.used_sizes_ai, self.used_sizes_human
+                              ,self.depth,0).heuristic()
+            print("ai move: " + str(self.ai_move))
             self.nextTurn(self.ai_move[0], self.ai_move[1], self.ai_move[2], self.ai)
 
 
     def changePlayer(self):
         "changePlayer -............................................................."
+        self.depth +=1
+
         if self.curr_player == self.ai:
             self.curr_player = self.human
             self.stat_frame = StatFrame(self.human)    # update stats frame
@@ -148,7 +152,7 @@ class App(tk.Tk):
         "updateChosenSize - add used sizes into corresponding list for each player"
         if self.curr_player == self.ai:
             self.used_sizes_ai.add(size)
-            print("used AI: "+ str(self.used_sizes_ai))
+            # print("used AI: "+ str(self.used_sizes_ai))
         else:
             self.used_sizes_human.add(size)
 
@@ -227,7 +231,7 @@ class App(tk.Tk):
             # tied position
             self.tie_label = tk.Label(self, text="Game Tie", borderwidth=3, bg="white", anchor=tk.CENTER,
                                       font=WINNER_TIE_LABEL)
-            print(self.button_info)
+            # print(self.button_info)
             self.tie_label.grid(row=0, column=0, columnspan=3)
             for row in range(3):
                 for col in range(3):
@@ -271,7 +275,8 @@ class App(tk.Tk):
                         self.changePlayer()
 
                     # AI make a move (best move)
-                    self.ai_move = AI(self.curr_player, self.button_info, self.used_sizes_ai,eval ,LEVEL).heuristic()[1]
+                    self.ai_move = AI(self.curr_player, self.button_info, self.used_sizes_ai, self.used_sizes_human
+                                                                                    ,self.depth, LEVEL).heuristic()
                     self.nextTurn(self.ai_move[0], self.ai_move[1], self.ai_move[2], self.ai)
 
             elif self.button_list[row][column]['text'] != self.curr_player and self.button_info[row][column][0] < size:
@@ -289,7 +294,8 @@ class App(tk.Tk):
                     self.changePlayer()
 
                 # AI make a move
-                self.ai_move = AI(self.curr_player, self.button_info, self.used_sizes_ai, eval, LEVEL).heuristic()[1]
+                self.ai_move = AI(self.curr_player, self.button_info, self.used_sizes_ai, self.used_sizes_human,
+                                                                                    self.depth, LEVEL).heuristic()[1]
                 self.nextTurn(self.ai_move[0], self.ai_move[1], self.ai_move[2], self.ai)
 
 
@@ -344,73 +350,112 @@ class StatFrame(tk.Frame):
             self.player_turn.grid(row=0,column=1)
 
 class AI():
-    def __init__(self, player,board_info, used_sizes, eval,LEVEL):
+    def __init__(self, player,board_info, ai_used_sizes, human_used_sizes, depth, LEVEL):
         self.ai = player
+        self.human = 'o'
         self.board = board_info
-        self.ai_used_sizes = used_sizes
-        self.eval = eval    # evaluation for a specific game board
+        self.ai_used_sizes = ai_used_sizes
+        self.human_used_sizes = human_used_sizes
+        self.eval = 0    # evaluation for a specific game board
+        self.depth = depth
         self.level = LEVEL
 
-    def possibleMoves(self):
+        if self.human == self.ai:
+            self.human = 'x'
+
+    def possibleMoves(self, board, player, player_used_sizes):
         "possibleMoves - function returns a list of all possible moves for a game state (row, column, (size, player))"
         possible_moves = []
         # find sizes not used
-        unused_sizes = list(set([1, 2, 3, 4, 5]).difference(set(self.ai_used_sizes)))
+        unused_sizes = list(set([1, 2, 3, 4, 5]).difference(set(player_used_sizes)))
         for row in range(3):
             for col in range(3):
                 # find empty spaces
-                if self.board[row][col] == 0:
+                if board[row][col] == 0:
                     for size in unused_sizes:
                         possible_moves.append((row, col, size))
                 else:
                     # place all of them who are possible to use for a specific button in the list
-                    stomp_sizes = [size for size in unused_sizes if size > self.board[row][col][0]]
-                    if self.board[row][col][1] != self.ai and len(stomp_sizes) > 0:
+                    stomp_sizes = [size for size in unused_sizes if size > board[row][col][0]]
+                    if board[row][col][1] != player and len(stomp_sizes) > 0:
                         for size in stomp_sizes:
                             possible_moves.append((row,col,size))
-        print(possible_moves)
+        # print(possible_moves)
         return possible_moves
 
-    def evaluation(self, board):
-        """evaluation - recives a board state and a current player and returns a score based on the following:
-           +3 - for EACH 3-in-a-line for the computer (-3 for human)
-           +2 - for Each 2-in-a-line for the computer (-2 for human)
-           +1 - for Each 1-in-a-line for the computer (-1 for human)
-           0 - for an empty tile
-           board = [
-                    [x,o,x]
-                    [x,x,o]
-                    [o,o, ]
-           """
-        if self.ai == 'x':
-            human = 'o'
-        else:
-            human = 'x'
-        # game_over_flag
+    def checkWinner(self, board):
+        # horizontal win
+        for row in range(3):
+            cond = all(board[row][col] != 0 for col in range(3))
+            if cond and (board[row][0][1] == board[row][1][1] == board[row][2][1]):
+                if board[row][0][1] == self.ai:
+                    self.eval = 1
+                else:
+                    self.eval = -1
+                return self.eval
 
-    def minimax(self, board, depth, is_maximizing):
-        if depth == 0 or  self.eval != 0:
+        # vertical win
+        for col in range(3):
+            cond = all(board[row][col] != 0 for row in range(3))
+            if cond and (board[0][col][1] == board[1][col][1] == board[2][col][1]):
+                if board[0][col][1] == self.ai:
+                   self.eval = -1
+                else:
+                    self.eval = 1
+                return self.eval
+
+        # main diagonal win
+        cond = all(board[i][i] != 0 for i in range(3))
+        if cond and (board[0][0][1] == board[1][1][1]  == board[2][2][1]):
+            if board[0][0][1] == self.ai:
+                self.eval = -1
+            else:
+                self.eval = 1
             return self.eval
 
-        if is_maximizing:
+        # second diagonal win
+        cond = (board[0][2] != 0 and board[1][1] != 0 and board[2][0] != 0)
+        if cond and (board[0][2][1] == board[1][1][1] == board[2][0][1]):
+            if board[0][2][1] == self.ai:
+                self.eval = -1
+            else:
+                self.eval = 1
+            return self.eval
+
+        self.eval = 0
+        return self.eval
+
+
+    def minimax(self, board, depth, ai_used_sizes, human_used_sizes, is_maximizing):
+        if depth == 0 or  self.checkWinner(board) != 0 :
+            return self.eval, None
+
+        if is_maximizing:               # human
             max_eval = float("-inf")
-            children = self.possibleMoves()
+            children = self.possibleMoves(board, self.human, human_used_sizes)
             for child in children:
-                temp_board = copy.deepcopy(self.board)
-                temp_board[child[0]][child[1]] = (child[2], self.ai)
-                eval = self.minimax(temp_board, depth - 1, False)[0]
+                temp_board = copy.deepcopy(board)
+                temp_human_used_sizes = copy.deepcopy(human_used_sizes)
+                # print(temp_board)
+                temp_board[child[0]][child[1]] = (child[2], self.human)
+                # add to used sizes - human
+                temp_human_used_sizes.add(child[2])
+                eval = self.minimax(temp_board, depth - 1, ai_used_sizes, temp_human_used_sizes, False)[0]
                 max_eval = max(max_eval, eval)
                 if eval == max_eval:
                     best_move = (child[0], child[1], child[2])
             return max_eval, best_move
 
-        else:
+        else:                         # computer
             min_eval = float("inf")
-            children = self.possibleMoves()
+            children = self.possibleMoves(board, self.ai, ai_used_sizes)
             for child in children:
-                temp_board = copy.deepcopy(self.board)
+                temp_board = copy.deepcopy(board)
+                temp_ai_used_sizes = copy.deepcopy(ai_used_sizes)
                 temp_board[child[0]][child[1]] = (child[2], self.ai)
-                eval = self.minimax(child, depth -1, True)
+                # add to used sizes - AI
+                temp_ai_used_sizes.add(child[2])
+                eval = self.minimax(temp_board, depth -1,temp_ai_used_sizes, human_used_sizes, True)[0]
                 min_eval = min(min_eval, eval)
                 if eval == min_eval:
                     best_move = (child[0], child[1], child[2])
@@ -420,23 +465,16 @@ class AI():
     def heuristic(self):
         if self.level == EASY:
             # random heuristic
-           return random.choice(self.possibleMoves())
+            choices = self.possibleMoves(self.board, self.ai, self.ai_used_sizes)
+            return random.choice(choices)
 
         elif self.level == MEDIUM:
             pass
-            # basic heuristic
-            #                 possible_moves = self.possibleMoves()
-            #                 sequence_moves = []
-            #                 # iterate over possible moves and create a list of adjacent tiles
-            #                 for move in possible_moves:
-            #                     for x in possible_moves:
-            #                         if abs(x[0] - move[0]) == 1 or abs(x[1] - move[1]) == 1:
-            #                             sequence_moves.append(x)
-            #                 return sequence_moves
+
         elif self.level == 2:
             # minimax heuristic
-            eval, best_move = self.minimax(self.board,1000, False)
-            return best_move
+            eval, best_move_t = self.minimax(self.board, self.depth,self.ai_used_sizes, self.human_used_sizes, False)
+            return best_move_t
 
 
 
