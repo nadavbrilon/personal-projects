@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="calcStyle.css">
+
+  <title>Frontend Mentor | Calculator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calc-container">
+
+    <header class="calc-header">
+
+      <img src="/CalcProject/pendo_icon.png" alt="pendo-icon">
+
+      <div class="header-theme-chooser">
+        <span>THEME</span>
+        <div class="theme-numbering">1 2 3</div>
+        <div class="theme-button-chooser">
+          <ul->
+            <li class="option_left"></li>
+            <li id="option_mid"></li>
+            <li id="option_right"></li>
+          </ul->
+        </div>
+      </div>
+    </header>
+
+    <div class="calc-display">
+      <h1></h1>
+    </div>
+
+    <div class="calc-button-container">
+      <div class="button-number">7</div>
+      <div class="button-number">8</div>
+      <div class="button-number">9</div>
+      <div class="button-op" id="button-op-del">DEL</div>
+
+      <div class="button-number">4</div>
+      <div class="button-number">5</div>
+      <div class="button-number">6</div>
+      <div class="button-op" id="button-op-plus">+</div>
+
+      <div class="button-number">1</div>
+      <div class="button-number">2</div>
+      <div class="button-number">3</div>
+      <div class="button-op" id="button-op-minus">-</div>
+
+      <div class="button-number" id="button-number-dot">.</div>
+      <div class="button-number">0</div>
+      <div class="button-op" id="button-op-divide">/</div>
+      <div class="button-op" id="button-op-multiply">x</div>
+
+      <div class="button-op" id="button-op-reset">RESET</div>
+      <div class="button-op" id="button-op-equal">=</div>
+
+      <div class="last-row">
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+    Coded by <a href="#">Your Name Here</a>.
+  </div> -->
+  <script src="calc.js"></script>
+</body>
+
+</html>
