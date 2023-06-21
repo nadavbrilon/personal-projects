@@ -143,13 +143,3 @@ opButton.forEach(btn => {   //todo: same as button
         }
     })
 })
-
-
-/** Questions & Thoughts
-
-1. Q - better to handle info during building of expression or parse at the end.
-1.1. if "real time" handling - add syntax error flag? (234++)
-2. Global variables definition and usage (is it okay in here?)
-3. help to make this code ES6 friendly - when is best to use arrow functions. => this for window.
-4. is it possible to make a function that disables the buttons ? relationship between objects/elements and functions
- */
