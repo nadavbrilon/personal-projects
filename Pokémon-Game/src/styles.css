@@ -1,0 +1,175 @@
+* {
+    font-family: "Montserrat", sans-serif;
+}
+
+.page-title {
+    text-align: center;
+    font-family: "McLaren", cursive;
+    margin: 20px;
+}
+
+.inner-stat-title{
+    font-family: "McLaren", cursive;
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.my-pokemon {
+    display: flex;
+    width: 600px;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 30px;
+    background-color:rgb(250, 250, 250);
+    /* border: 2px solid black; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.team-plus-divider{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+}
+
+.divider {
+    width: 2px;
+    height: 400px;
+    background-color: black;
+    margin-left:100px; /* Adjust the margin to control the space between divs and the divider */
+    content: "";
+  }
+
+.battle-button{
+    margin: 20px;
+    background-color: rgb(241, 239, 239);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+}
+
+.battle-button:hover{
+    color: rgb(241, 239, 239);;
+    background-color: rgb(0, 0, 200);
+    font-weight: bold;
+}
+
+.startover-button{
+    margin: 20px;
+    background-color: rgb(241, 239, 239);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+}
+
+/**/
+.startover-button:hover{
+    color: rgb(241, 239, 239);;
+    background-color: rgb(0, 0, 0);
+    font-weight: bold;
+}
+
+.selected-pokemon {
+    display: flex;
+    margin-right: 50px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+BattleStats > h4{
+    text-align: left;
+}
+
+.pokemon-name {
+    font-family: "McLaren", cursive;
+    text-align: left;
+}
+
+p {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+
+.trainer-stats-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 2px dotted green;
+    margin: 8px;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.user-stats{
+    font-family: "McLaren", cursive;
+}
+
+.user-percentage{
+    display: block;
+    width: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    border: 1px dotted green;
+    border-color: green;
+    color: green
+}
+
+
+.battle-screen-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:rgb(250, 250, 250);
+    /* border: 2px solid black; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    width: 600px;
+    border-radius: 10px;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.battle-style {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+
+.move-element{
+    padding: 5px;
+    align-content: center;
+}
+
+.move-element:hover {
+    cursor: pointer;
+    background-color: rgba(175, 172, 172, 0.44);;
+}
+
+
+.usr-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.opp-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
+.pokemon-moves-card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.screen-msg-container {
+    width: 80%;
+    border: 2px dashed black;
+    border-radius: 30px;
+    opacity: 1; /* Initially set to transparent */
+    /*animation: fadeOut 5s ease forwards; !* Apply fade-in animation *!*/
+}
