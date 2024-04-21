@@ -32,9 +32,16 @@ React (https://reactjs.org/): JavaScript library used for building the user inte
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ### Demo
-Check out a live demo of PokeTaub here.
+Check out a live demo of PokeTaub here:
 
-### Roadmap
-Implement multiplayer battles.
-Add support for additional Pokémon generations.
-Enhance user interface and visual design.
+#### Pokemon mangament screen:
+![image](https://github.com/nadavbrilon/personal-projects/assets/63443963/78ff904f-5d3f-471d-9946-7b8603704964)
+
+#### Battle Screen:
+![image](https://github.com/nadavbrilon/personal-projects/assets/63443963/4377359e-1847-4d26-9c51-a346f07f9798)
+
+![image](https://github.com/nadavbrilon/personal-projects/assets/63443963/36610c5e-13a5-477f-9382-1a71ee78d21d)
+
+
+
+
