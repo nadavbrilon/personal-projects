@@ -26,13 +26,14 @@ The PokeTaub project employs complex state management techniques, leveraging Rea
 
 ### Credits
 PokeAPI (https://pokeapi.co/): Provides Pokémon data and images used in the game.
+
 React (https://reactjs.org/): JavaScript library used for building the user interface.
 
 ### License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ### Demo
-Check out a live demo of PokeTaub here:
+Featured photos from the game:
 
 #### Pokemon mangament screen:
 ![image](https://github.com/nadavbrilon/personal-projects/assets/63443963/78ff904f-5d3f-471d-9946-7b8603704964)
