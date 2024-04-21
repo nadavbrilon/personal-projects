@@ -18,28 +18,18 @@ Start the development server: npm start
 ### Usage
 Once the development server is running, you can access the PokeTaub application in your web browser at http://localhost:3000. Follow the on-screen instructions to navigate through the game and participate in battles.
 
-### Contributing
-We welcome contributions from the community! If you find a bug, have a feature request, or would like to contribute code, please follow these guidelines:
+### API Usage
+PokeTaub utilizes the PokeAPI (https://pokeapi.co/) to fetch Pokémon data and images used in the game. This includes information such as Pokémon names, types, stats, and available moves. Asynchronous programming techniques are employed to fetch data from the API and update the game state accordingly.
 
-Submit bug reports and feature requests via the GitHub issue tracker.
-Fork the repository, make your changes, and submit a pull request.
-Credits
+### State Management
+The PokeTaub project employs complex state management techniques, leveraging React hooks such as useState and useEffect to manage component state and perform side effects. Careful consideration is given to minimize unnecessary re-renders and optimize performance.
+
+### Credits
 PokeAPI (https://pokeapi.co/): Provides Pokémon data and images used in the game.
 React (https://reactjs.org/): JavaScript library used for building the user interface.
-License
+
+### License
 This project is licensed under the MIT License. See the LICENSE file for details.
-
-### Documentation
-Additional documentation for the PokeTaub project can be found in the docs directory.
-
-### Changelog
-For a complete list of changes in each version of the PokeTaub project, see the CHANGELOG file.
-
-### Contact
-For questions or inquiries about the PokeTaub project, please contact Your Name.
-
-### Support
-If you need assistance or support while using the PokeTaub application, please visit our community forum or submit a request via our helpdesk.
 
 ### Demo
 Check out a live demo of PokeTaub here.
